@@ -1,0 +1,27 @@
+{
+	"manifest_version": 2,
+	"name": "Clip",
+	"version": "0.0.0",
+
+	"description": "Shorten your URLs as you copy them!",
+	"optional_permissions": [
+		"clipboardRead"
+	],
+
+	/*
+	"background": {
+		"page": "background.html"
+	},
+	*/
+	"background": {
+		"scripts": [
+			"background.js"
+		]
+	},
+	"content_scripts": [
+		{
+			"matches": ["http://*/*"],
+			"js": ["oncopy.js"]
+		}
+	]
+}
