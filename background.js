@@ -8,12 +8,13 @@ function isValidURL(str) {
 }
 
 function getCopiedText(callback) {
-	var pasteTarget = document.createElement("div");
-    pasteTarget.contentEditable = true;
-    alert(pasteTarget);
+	var pasteTarget = document.createElement("input");
+    // pasteTarget.contentEditable = true;
     var actElem = document.activeElement.appendChild(pasteTarget).parentNode;
     pasteTarget.focus();
-    document.execCommand("paste", null, null);
+    document.execCommand("paste");
+    alert("HEI3");
+    alert(pasteTarget.value);
     var paste = pasteTarget.innerText;
     actElem.removeChild(pasteTarget);
     callback(paste);

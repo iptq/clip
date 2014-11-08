@@ -5,7 +5,8 @@
 
 	"description": "Shorten your URLs as you copy them!",
 	"optional_permissions": [
-		"clipboardRead"
+		"clipboardRead",
+		"clipboardWrite"
 	],
 
 	/*
