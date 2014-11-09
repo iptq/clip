@@ -26,7 +26,7 @@ function shorten(text) {
 		"apiKey": "R_d7178ff7bd7919c88b4b16e833471b87",
 		"longUrl": text,
 	}, function(response) {
-		alert("shortened to "+response.data.url);
+		// alert("shortened to "+response.data.url);
 		pasteInto(response.data.url);
 	});
 	/*
@@ -46,7 +46,14 @@ function shorten(text) {
 }
 
 function pasteInto(url) {
-	
+	var copyFrom = $('<textarea/>');
+	copyFrom.text(url);
+	$('body').append(copyFrom);
+	copyFrom.select();
+	document.execCommand('copy');
+	copyFrom.remove();
+
+	alert("done!");
 }
 
 function copyListener(request, sender, sendResponse) {
@@ -55,7 +62,7 @@ function copyListener(request, sender, sendResponse) {
 			if (isValidURL(text)) {
 				shorten(text);
 			} else {
-				alert("isn't valid!");
+				// alert("isn't valid!");
 			}
 		});
 	}
