@@ -18,22 +18,47 @@ function getCopiedText(callback) {
     callback(paste);
 }
 
+function shorten(text) {
+	alert("shortening...");
+	$.getJSON("https://api-ssl.bitly.com/v3/shorten", {
+		"format": "json",
+		"login": "kspksp",
+		"apiKey": "R_d7178ff7bd7919c88b4b16e833471b87",
+		"longUrl": text,
+	}, function(response) {
+		alert("shortened to "+response.data.url);
+		pasteInto(response.data.url);
+	});
+	/*
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "https://api-ssl.bitly.com/v3/.....");
+	xhr.onreadystatechange = function() { 
+	    if(xhr.readyState == 4) { 
+	        if(xhr.status==200) {
+	            console.log("CORS works!", xhr.responseText);         
+	        } else {
+	            console.log("Oops", xhr);
+	        }
+	    } 
+	}
+	xhr.send();
+	*/
+}
+
+function pasteInto(url) {
+	
+}
+
 function copyListener(request, sender, sendResponse) {
 	if (request.event == "copy") {
 		getCopiedText(function(text) {
-			alert("copied this shit: \"" + text + "\"");
-
-			var valid = isValidURL(text);
-			alert("is" + (valid ? "" : " not") + " a valid URL");
-
-			// make request to bitly api
-
-			// put shortened link into clipboard
+			if (isValidURL(text)) {
+				shorten(text);
+			} else {
+				alert("isn't valid!");
+			}
 		});
 	}
-	sendResponse({
-
-	});
 }
 
 chrome.extension.onRequest.addListener(copyListener);
