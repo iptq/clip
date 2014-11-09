@@ -64,6 +64,7 @@ function pasteInto(url) {
 
 function copyListener(request, sender, sendResponse) {
 	if (request.event == "copy") {
+		// alert("shit");
 		getCopiedText(function(text) {
 			if (isValidURL(text)) {
 				shorten(text);
