@@ -13,9 +13,7 @@ function getCopiedText(callback) {
     var actElem = document.activeElement.appendChild(pasteTarget).parentNode;
     pasteTarget.focus();
     document.execCommand("paste");
-    alert("HEI3");
-    alert(pasteTarget.value);
-    var paste = pasteTarget.innerText;
+    var paste = pasteTarget.value;
     actElem.removeChild(pasteTarget);
     callback(paste);
 }
