@@ -19,7 +19,7 @@ function getCopiedText(callback) {
 }
 
 function shorten(text) {
-	alert("shortening...");
+	// alert("shortening...");
 	$.getJSON("https://api-ssl.bitly.com/v3/shorten", {
 		"format": "json",
 		"login": "kspksp",
@@ -53,7 +53,7 @@ function pasteInto(url) {
 	document.execCommand('copy');
 	copyFrom.remove();
 
-	alert("done!");
+	// alert("done!");
 }
 
 function copyListener(request, sender, sendResponse) {
@@ -69,3 +69,14 @@ function copyListener(request, sender, sendResponse) {
 }
 
 chrome.extension.onRequest.addListener(copyListener);
+
+function clickHandler(e) {
+	shorten(e.linkUrl);
+}
+
+chrome.contextMenus.create({
+	"title": "Copy and shorten link...",
+	"contexts": [ "link" ],
+	"onclick": clickHandler
+}, function() {
+});

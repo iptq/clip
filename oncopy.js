@@ -5,4 +5,3 @@ var onCopy = function(event) {
 }
 
 document.addEventListener("copy", onCopy, true);
-
