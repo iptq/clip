@@ -1,13 +1,14 @@
 {
 	"manifest_version": 2,
 	"name": "Clip",
-	"version": "1.0.0",
+	"version": "1.1.0",
 
 	"description": "Shorten your URLs as you copy them!",
 	"permissions": [
 		"clipboardRead",
 		"clipboardWrite",
-		"contextMenus"
+		"contextMenus",
+		"notifications"
 	],
 
 	"icons": {
@@ -16,13 +17,19 @@
 		"64": "icon-64.png",
 		"128": "icon-128.png"
 	},
-	
+
 	"background": {
 		"scripts": [
 			"jquery.js",
+			"toastr.js",
 			"background.js"
 		]
 	},
+
+	"web_accessible_resources": [
+		"toastr.css"
+	],
+
 	"content_scripts": [
 		{
 			"matches": ["http://*/*"],

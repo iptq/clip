@@ -54,6 +54,12 @@ function pasteInto(url) {
 	copyFrom.remove();
 
 	// alert("done!");
+	chrome.notifications.create("", {
+		"type": "basic",
+		"iconUrl": "icon-128.png",
+		"title": "Success!",
+		"message": "Link shortened to "+url+"!"
+	}, function() {});
 }
 
 function copyListener(request, sender, sendResponse) {
