@@ -18,16 +18,16 @@ function getCopiedText(callback) {
     callback(paste);
 }
 
-function shorten(text) {
+function shorten(url) {
 	// alert("shortening...");
 	$.getJSON("https://api-ssl.bitly.com/v3/shorten", {
 		"format": "json",
 		"login": "kspksp",
 		"apiKey": "R_d7178ff7bd7919c88b4b16e833471b87",
-		"longUrl": text,
+		"longUrl": url,
 	}, function(response) {
 		// alert("shortened to "+response.data.url);
-		pasteInto(response.data.url);
+		pasteInto(response.data.url, url);
 	});
 	/*
 	var xhr = new XMLHttpRequest();
@@ -45,7 +45,7 @@ function shorten(text) {
 	*/
 }
 
-function pasteInto(url) {
+function pasteInto(url, long) {
 	var copyFrom = $('<textarea/>');
 	copyFrom.text(url);
 	$('body').append(copyFrom);
@@ -54,12 +54,22 @@ function pasteInto(url) {
 	copyFrom.remove();
 
 	// alert("done!");
-	chrome.notifications.create("", {
-		"type": "basic",
-		"iconUrl": "icon-128.png",
-		"title": "Success!",
-		"message": "Link shortened to "+url+"!"
-	}, function() {});
+
+	chrome.storage.local.get({ urls: [] }, function(res) {
+		var urls = res.urls;
+		urls.push({
+			shortUrl: url,
+			longUrl: long
+		});
+		chrome.storage.local.set({ urls: urls }, function(res) {
+			chrome.notifications.create("", {
+				"type": "basic",
+				"iconUrl": "icon-128.png",
+				"title": "Success!",
+				"message": "Link shortened to "+url+"!"
+			}, function() {});
+		});
+	});
 }
 
 function copyListener(request, sender, sendResponse) {
