@@ -16,12 +16,7 @@
 		"64": "icon-64.png",
 		"128": "icon-128.png"
 	},
-
-	/*
-	"background": {
-		"page": "background.html"
-	},
-	*/
+	
 	"background": {
 		"scripts": [
 			"jquery.js",
