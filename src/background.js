@@ -20,14 +20,16 @@ function getCopiedText(callback) {
 
 function shorten(url) {
 	// alert("shortening...");
-	$.getJSON("https://api-ssl.bitly.com/v3/shorten", {
-		"format": "json",
-		"login": "kspksp",
-		"apiKey": "R_d7178ff7bd7919c88b4b16e833471b87",
-		"longUrl": url,
-	}, function(response) {
-		// alert("shortened to "+response.data.url);
-		pasteInto(response.data.url, url);
+	chrome.storage.local.get({ apiKey: "R_d7178ff7bd7919c88b4b16e833471b87", login: "kspksp" }, function(res) {
+		$.getJSON("https://api-ssl.bitly.com/v3/shorten", {
+			"format": "json",
+			"login": res.login,
+			"apiKey": res.apiKey,
+			"longUrl": url,
+		}, function(response) {
+			// alert("shortened to "+response.data.url);
+			pasteInto(response.data.url, url);
+		});
 	});
 	/*
 	var xhr = new XMLHttpRequest();
