@@ -20,7 +20,7 @@ function getCopiedText(callback) {
 
 function shorten(url) {
 	// alert("shortening...");
-	chrome.storage.local.get({ apiKey: "R_d7178ff7bd7919c88b4b16e833471b87", login: "kspksp" }, function(res) {
+	chrome.storage.local.get({ apiKey: "R_ebd194bf205d434ab37e911d0c618a24", login: "clipurlshortener" }, function(res) {
 		$.getJSON("https://api-ssl.bitly.com/v3/shorten", {
 			"format": "json",
 			"login": res.login,
