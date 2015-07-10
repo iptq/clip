@@ -6,7 +6,5 @@ Clippr.onCopy = function() {
 	});
 };
 
-document.addEventListener("DOMContentLoaded", function(event) { 
-	document.addEventListener("copy", Clippr.onCopy, true);
-	console.log("Clippr script has been loaded.");
-});
+document.addEventListener("copy", Clippr.onCopy, true);
+console.log("Clippr script has been loaded.");
