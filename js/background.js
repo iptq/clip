@@ -18,7 +18,7 @@ Clippr.GetCopiedText = function(callback) {
     var paste = pasteTarget.value;
     actElem.removeChild(pasteTarget);
     callback(paste);
-}
+};
 
 Clippr.PasteInto = function(url, long) {
 	var copyFrom = $('<textarea/>');
@@ -37,26 +37,37 @@ Clippr.PasteInto = function(url, long) {
 		chrome.storage.local.set({ urls: urls }, function(res) {
 			chrome.notifications.create("", {
 				"type": "basic",
-				// "iconUrl": "icon-128.png",
+				"iconUrl": "../icons/1024.png",
 				"title": "Success!",
 				"message": "Link shortened to "+url+"!"
 			}, function() {});
 		});
 	});
-}
+};
 
 Clippr.Shorten = function(url) {
-	chrome.storage.local.get({  }, function(res) {
-		$.getJSON("https://api-ssl.bitly.com/v3/shorten", {
-			"format": "json",
-			"login": res.login,
-			"apiKey": res.apiKey,
-			"longUrl": url,
-		}, function(response) {
-			Clippr.PasteInto(response.data.url, url);
-		});
+	chrome.storage.local.get("clippr_service", function(res) {
+		var ClipprService = res.clippr_service;
+		if (ClipprService.type) {
+			if (ClipprService.type == "bitly" && ClipprService.bitly_code) {
+				$.getJSON("https://api-ssl.bitly.com/v3/shorten", {
+					"format": "json",
+					"access_token": ClipprService.bitly_code,
+					"longUrl": encodeURI(url)
+				}, function(response) {
+					console.log(response);
+					Clippr.PasteInto(response.data.url, url);
+				});
+			} else {
+				// u done fked up man
+				Clippr.AskForService();
+			}
+		} else {
+			Clippr.AskForService();
+		}
+
 	});
-}
+};
 
 Clippr.Listener = function(request, sender, sendResponse) {
 	if (request.event == "copy") {
@@ -76,3 +87,11 @@ Clippr.AskForService = function() {
 
 chrome.extension.onRequest.addListener(Clippr.Listener);
 chrome.runtime.onInstalled.addListener(Clippr.AskForService);
+
+chrome.contextMenus.create({
+	"title": "Copy and shorten link...",
+	"contexts": [ "link" ],
+	"onclick": function(e) {
+		Clippr.Shorten(e.linkUrl);
+	}
+}, function() { });
