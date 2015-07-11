@@ -1,7 +1,7 @@
 {
 	"name": "Clippr",
 	"description": "Automatically shorten your links as you copy them!",
-	"version": "3.0",
+	"version": "3.0.1",
 	"manifest_version": 2,
 	"minimum_chrome_version": "5.0",
 	"permissions": [

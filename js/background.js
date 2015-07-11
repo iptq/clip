@@ -20,7 +20,7 @@ Clippr.GetCopiedText = function(callback) {
     callback(paste);
 };
 
-Clippr.PasteInto = function(url, long) {
+Clippr.PasteInto = function(url, longURL) {
 	var copyFrom = $('<textarea/>');
 	copyFrom.text(url);
 	$('body').append(copyFrom);
@@ -32,7 +32,7 @@ Clippr.PasteInto = function(url, long) {
 		var urls = res.urls;
 		urls.push({
 			shortUrl: url,
-			longUrl: long
+			longUrl: longURL
 		});
 		chrome.storage.local.set({ urls: urls }, function(res) {
 			chrome.notifications.create("", {
